@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  @apply text-[15px] leading-relaxed text-slate-800 antialiased sm:text-sm sm:leading-normal;
+  background-color: #f4f7f8;
+}
+
+.app-watermark {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("/images/ertiga-bg.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.18;
+}
+
+.app-watermark-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(248, 250, 252, 0.72) 0%,
+    rgba(240, 253, 250, 0.78) 45%,
+    rgba(248, 250, 252, 0.88) 100%
+  );
+}
+
+.login-hero {
+  background-image: url("/images/ertiga-bg.png");
+  background-size: cover;
+  background-position: center;
+}
+
+@layer components {
+  .page-title {
+    @apply font-display text-lg font-bold leading-snug tracking-tight text-slate-900 break-words sm:text-2xl sm:leading-tight;
+  }
+
+  .page-subtitle {
+    @apply mt-1 text-sm leading-relaxed text-slate-600;
+  }
+
+  .section-title {
+    @apply font-display text-base font-semibold text-slate-900 sm:text-lg;
+  }
+
+  .card {
+    @apply rounded-2xl border border-white/70 bg-white/90 p-4 shadow-sm backdrop-blur-md sm:p-5;
+  }
+
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 sm:min-h-10 sm:text-sm;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand-600 text-white shadow-sm hover:bg-brand-700;
+  }
+
+  .btn-secondary {
+    @apply btn border border-slate-200 bg-white text-slate-700 hover:bg-slate-50;
+  }
+
+  .btn-danger {
+    @apply btn bg-rose-600 text-white hover:bg-rose-700;
+  }
+
+  .icon-btn {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 sm:h-10 sm:w-10;
+  }
+
+  .icon-btn-danger {
+    @apply icon-btn border-transparent bg-rose-600 text-white hover:bg-rose-700;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-base outline-none ring-brand-500 transition focus:border-brand-500 focus:ring-2 sm:py-2.5 sm:text-sm;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-700;
+  }
+}
+
+@media print {
+  .no-print,
+  .app-watermark,
+  .app-watermark-veil,
+  nav,
+  aside,
+  header,
+  .print-hidden {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  .print-only-invoice {
+    position: static !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+}

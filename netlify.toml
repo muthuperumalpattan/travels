@@ -1,0 +1,40 @@
+[build]
+  command = "npm run build:netlify"
+  publish = "client/dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+  SECRETS_SCAN_SMART_DETECTION_ENABLED = "false"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["server/src/**"]
+
+[functions.api]
+  timeout = 26
+  external_node_modules = [
+    "express",
+    "googleapis",
+    "pdfkit",
+    "cookie-parser",
+    "cors",
+    "helmet",
+    "jsonwebtoken",
+    "bcryptjs",
+    "zod",
+    "morgan",
+    "express-rate-limit",
+    "dotenv"
+  ]
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
