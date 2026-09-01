@@ -16,7 +16,7 @@
     "start": "npm run start -w server",
     "test": "npm run test -w server && npm run test -w client",
     "seed": "npm run seed -w server",
-    "cap:sync": "npm run build -w client && npx cap sync android",
+    "cap:sync": "npm run build:netlify --workspace=client && npx cap sync android",
     "apk:debug": "npm run cap:sync && cd android && .\\gradlew.bat assembleDebug"
   },
   "devDependencies": {

@@ -12,8 +12,11 @@ jobs:
         with:
           node-version: "20"
       - run: npm install
-      - run: npm run build -w client
-      - run: npx cap sync android
+      - run: npm run build:netlify --workspace=client
+      - name: Sync Capacitor with live Netlify site
+        env:
+          CAPACITOR_SERVER_URL: https://manitravelstuti.netlify.app
+        run: npx cap sync android
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

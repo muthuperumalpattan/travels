@@ -1,6 +1,6 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
-const liveUrl = process.env.CAPACITOR_SERVER_URL;
+const liveUrl = process.env.CAPACITOR_SERVER_URL ?? "https://manitravelstuti.netlify.app";
 
 const config: CapacitorConfig = {
   appId: "com.travelrecords.app",
@@ -10,6 +10,7 @@ const config: CapacitorConfig = {
     ? {
         url: liveUrl,
         cleartext: liveUrl.startsWith("http://"),
+        allowNavigation: ["manitravelstuti.netlify.app"],
       }
     : {
         androidScheme: "https",
