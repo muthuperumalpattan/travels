@@ -29,6 +29,7 @@ export function TravelRecordsPage() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -75,7 +76,8 @@ export function TravelRecordsPage() {
   }
 
   async function confirmDelete() {
-    if (!deleteId) return;
+    if (!deleteId || deleting) return;
+    setDeleting(true);
     try {
       await deleteTravel(deleteId);
       toast.success("Deleted successfully");
@@ -83,6 +85,8 @@ export function TravelRecordsPage() {
       setApplied((prev) => ({ ...prev }));
     } catch (error) {
       toast.error(getErrorMessage(error, "Unable to delete travel record"));
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -112,8 +116,8 @@ export function TravelRecordsPage() {
             allowAdd={false}
           />
           <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row md:col-span-2 xl:col-span-4">
-            <Button type="submit" className="w-full sm:w-auto">
-              Search
+            <Button type="submit" loading={loading} className="w-full sm:w-auto">
+              {loading ? "Searching..." : "Search"}
             </Button>
             <Button type="button" variant="secondary" className="w-full sm:w-auto" onClick={onClear}>
               Clear Filters
@@ -222,8 +226,12 @@ export function TravelRecordsPage() {
         title="Delete travel record?"
         message="This will permanently remove the record and its invoice. This cannot be undone."
         confirmLabel="Delete"
+        busyLabel="Deleting..."
         danger
-        onCancel={() => setDeleteId(null)}
+        busy={deleting}
+        onCancel={() => {
+          if (!deleting) setDeleteId(null);
+        }}
         onConfirm={confirmDelete}
       />
     </div>

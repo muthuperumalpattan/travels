@@ -271,7 +271,7 @@ export function TravelForm({ initial, submitting, onSubmit }: Props) {
       </Card>
 
       <div className="flex justify-end">
-        <Button type="submit" disabled={submitting} className="w-full min-w-36 sm:w-auto">
+        <Button type="submit" loading={submitting} className="w-full min-w-36 sm:w-auto">
           {submitting ? "Saving..." : "Save"}
         </Button>
       </div>

@@ -56,7 +56,7 @@ export function LoginPage() {
               required
             />
           </div>
-          <Button type="submit" disabled={submitting} className="mt-6 w-full">
+          <Button type="submit" loading={submitting} className="mt-6 w-full">
             {submitting ? "Signing in..." : "Login"}
           </Button>
           <p className="mt-4 text-center text-xs text-slate-500">

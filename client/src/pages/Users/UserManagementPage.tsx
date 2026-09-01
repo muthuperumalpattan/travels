@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Pencil, Trash2, UserX } from "lucide-react";
+import { Pencil, Trash2, UserX, Loader2 } from "lucide-react";
 import { Card } from "../../components/Card";
 import { Loading } from "../../components/Loading";
 import { Modal } from "../../components/Modal";
+import { Button } from "../../components/Button";
 import { PageHeader } from "../../components/PageHeader";
 import { deleteUser, listUsers, updateUser } from "../../services/users";
 import { User } from "../../types";
@@ -16,6 +17,8 @@ export function UserManagementPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [statusId, setStatusId] = useState<string | null>(null);
 
   async function load() {
     setLoading(true);
@@ -34,6 +37,8 @@ export function UserManagementPage() {
   }, []);
 
   async function disableUser(user: User) {
+    if (statusId) return;
+    setStatusId(user.id);
     try {
       await updateUser(user.id, {
         fullName: user.fullName,
@@ -47,11 +52,14 @@ export function UserManagementPage() {
       await load();
     } catch (error) {
       toast.error(getErrorMessage(error, "Unable to update user"));
+    } finally {
+      setStatusId(null);
     }
   }
 
   async function confirmDelete() {
-    if (!deleteId) return;
+    if (!deleteId || deleting) return;
+    setDeleting(true);
     try {
       await deleteUser(deleteId);
       toast.success("Deleted successfully");
@@ -59,6 +67,8 @@ export function UserManagementPage() {
       await load();
     } catch (error) {
       toast.error(getErrorMessage(error, "Unable to delete user"));
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -111,10 +121,15 @@ export function UserManagementPage() {
                     <button
                       type="button"
                       className="icon-btn"
+                      disabled={statusId === u.id}
                       title={u.status === "Active" ? "Disable" : "Enable"}
                       onClick={() => disableUser(u)}
                     >
-                      <UserX size={20} />
+                      {statusId === u.id ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <UserX size={20} />
+                      )}
                     </button>
                     {u.id !== me?.id ? (
                       <button
@@ -145,9 +160,15 @@ export function UserManagementPage() {
               <Link className="btn-secondary w-full sm:w-auto" to={`/users/${u.id}/edit`}>
                 Edit
               </Link>
-              <button type="button" className="btn-secondary w-full sm:w-auto" onClick={() => disableUser(u)}>
+              <Button
+                type="button"
+                variant="secondary"
+                className="w-full sm:w-auto"
+                loading={statusId === u.id}
+                onClick={() => disableUser(u)}
+              >
                 {u.status === "Active" ? "Disable" : "Enable"}
-              </button>
+              </Button>
             </div>
           </Card>
         ))}
@@ -158,8 +179,12 @@ export function UserManagementPage() {
         title="Delete user?"
         message="This account will be permanently removed."
         confirmLabel="Delete"
+        busyLabel="Deleting..."
         danger
-        onCancel={() => setDeleteId(null)}
+        busy={deleting}
+        onCancel={() => {
+          if (!deleting) setDeleteId(null);
+        }}
         onConfirm={confirmDelete}
       />
     </div>

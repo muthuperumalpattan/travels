@@ -104,7 +104,7 @@ export function AddUserPage() {
             ]}
           />
           <div className="sm:col-span-2 flex justify-end">
-            <Button type="submit" disabled={submitting} className="w-full sm:w-auto">
+            <Button type="submit" loading={submitting} className="w-full sm:w-auto">
               {submitting ? "Saving..." : "Save"}
             </Button>
           </div>

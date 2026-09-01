@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { Printer, ExternalLink, RefreshCw } from "lucide-react";
+import { Printer, ExternalLink } from "lucide-react";
 import { apiUrl } from "../../services/api";
 import { getTravel, retryInvoice } from "../../services/travel";
 import { TravelRecord } from "../../types";
@@ -80,8 +80,7 @@ export function InvoicePage() {
                 Open Invoice
               </a>
               {record.invoiceStatus === "pending_drive" ? (
-                <Button type="button" variant="secondary" disabled={retrying} onClick={onRetry}>
-                  <RefreshCw size={20} />
+                <Button type="button" variant="secondary" loading={retrying} onClick={onRetry}>
                   {retrying ? "Retrying..." : "Retry Drive upload"}
                 </Button>
               ) : null}

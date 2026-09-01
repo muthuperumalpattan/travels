@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { ChevronDown, Plus } from "lucide-react";
+import { ChevronDown, Plus, Loader2 } from "lucide-react";
 import { addPlace, listPlaces } from "../services/places";
 import { cn } from "../utils/format";
 import { getErrorMessage } from "../context/AuthContext";
@@ -150,7 +150,7 @@ export function PlaceCombobox({
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => void onAdd()}
             >
-              <Plus size={20} />
+              {adding ? <Loader2 className="h-5 w-5 shrink-0 animate-spin" /> : <Plus size={20} />}
               {adding ? "Adding..." : `Add "${query.trim()}"`}
             </button>
           ) : null}
