@@ -12,7 +12,7 @@
     "dev:server": "npm run dev -w server",
     "dev:client": "npm run dev -w client",
     "build": "npm run build -w server && npm run build -w client",
-    "build:netlify": "npm run build -w client",
+    "build:netlify": "npm run build --workspace=client",
     "start": "npm run start -w server",
     "test": "npm run test -w server && npm run test -w client",
     "seed": "npm run seed -w server",
@@ -22,12 +22,12 @@
   "devDependencies": {
     "@capacitor/android": "^6.2.0",
     "@capacitor/cli": "^6.2.0",
-    "@netlify/functions": "^2.8.2",
-    "concurrently": "^9.1.2",
-    "serverless-http": "^3.2.0"
+    "concurrently": "^9.1.2"
   },
   "dependencies": {
-    "@capacitor/core": "^6.2.0"
+    "@capacitor/core": "^6.2.0",
+    "@netlify/functions": "^2.8.2",
+    "serverless-http": "^3.2.0"
   },
   "engines": {
     "node": ">=20"
