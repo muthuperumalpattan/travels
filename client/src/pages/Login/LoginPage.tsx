@@ -59,9 +59,7 @@ export function LoginPage() {
           <Button type="submit" loading={submitting} className="mt-6 w-full">
             {submitting ? "Signing in..." : "Login"}
           </Button>
-          <p className="mt-4 text-center text-xs text-slate-500">
-            Demo: admin / Admin@123 · manager / Manager@123 · staff / Staff@123
-          </p>
+          
         </form>
       </div>
     </div>
