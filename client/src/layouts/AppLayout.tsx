@@ -42,7 +42,7 @@ export function AppLayout() {
             >
               {open ? <X size={24} /> : <Menu size={24} />}
             </button>
-            <span className="font-display text-base font-semibold sm:text-lg">Travel Records</span>
+            <span className="font-display text-base font-semibold sm:text-lg">Mani Cars</span>
           </header>
           <main className="mx-auto w-full max-w-7xl flex-1 px-3 py-4 sm:px-6 sm:py-6">
             <Outlet />

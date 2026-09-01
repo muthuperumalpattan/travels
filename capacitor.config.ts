@@ -4,7 +4,7 @@ const liveUrl = process.env.CAPACITOR_SERVER_URL ?? "https://manitravelstuti.net
 
 const config: CapacitorConfig = {
   appId: "com.travelrecords.app",
-  appName: "Travel Records",
+  appName: "Mani Cars",
   webDir: "client/dist",
   server: liveUrl
     ? {

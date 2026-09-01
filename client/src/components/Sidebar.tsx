@@ -39,7 +39,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full flex-col bg-slate-900 text-slate-100">
       <div className="border-b border-white/10 px-5 py-5">
-        <p className="font-display text-base font-semibold tracking-tight sm:text-lg">Travel Records</p>
+        <p className="font-display text-base font-semibold tracking-tight sm:text-lg">Mani Cars</p>
         <p className="mt-1 text-sm text-slate-400">Invoice & fleet ledger</p>
       </div>
       <nav className="flex-1 space-y-1 overflow-y-auto p-3">

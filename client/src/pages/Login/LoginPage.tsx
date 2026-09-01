@@ -35,7 +35,7 @@ export function LoginPage() {
       <div className="relative z-10 flex min-h-screen items-center justify-center p-4">
         <form onSubmit={onSubmit} className="w-full max-w-md rounded-3xl bg-white/95 p-6 shadow-2xl backdrop-blur sm:p-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-700 sm:text-xs">Fleet ledger</p>
-          <h1 className="font-display mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Travel Management</h1>
+          <h1 className="font-display mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Mani Cars</h1>
           <p className="mt-2 text-[15px] text-slate-600 sm:text-sm">Sign in to record trips, invoices, and settlements.</p>
           <div className="mt-6 space-y-4">
             <Input
