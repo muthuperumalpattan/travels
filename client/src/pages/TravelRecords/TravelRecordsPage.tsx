@@ -12,7 +12,7 @@ import { Loading } from "../../components/Loading";
 import { Pagination } from "../../components/Pagination";
 import { Modal } from "../../components/Modal";
 import { PageHeader } from "../../components/PageHeader";
-import { formatDate, formatInr } from "../../utils/format";
+import { formatDate, formatInr, cn } from "../../utils/format";
 import { useAuth, getErrorMessage } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
 
@@ -135,23 +135,23 @@ export function TravelRecordsPage() {
       ) : (
         <>
           <div className="hidden overflow-x-auto rounded-2xl border border-white/70 bg-white/90 shadow-sm lg:block">
-            <table className="min-w-full text-left text-sm">
+            <table className="min-w-full table-fixed text-left text-sm">
               <thead className="bg-slate-50 text-slate-600">
                 <tr>
                   {[
-                    "Invoice No",
-                    "Customer",
-                    "From",
-                    "To",
-                    "From Date",
-                    "To Date",
-                    "Total",
-                    "Driver",
-                    "Petrol",
-                    "Profit",
-                    "Actions",
-                  ].map((h) => (
-                    <th key={h} className="whitespace-nowrap px-3 py-3 font-medium">
+                    ["Invoice No", "w-[9.5rem]"],
+                    ["Customer", "w-[8rem]"],
+                    ["From", "w-[7rem]"],
+                    ["To", "w-[7rem]"],
+                    ["From Date", "w-[7rem]"],
+                    ["To Date", "w-[7rem]"],
+                    ["Total", "w-[7rem]"],
+                    ["Driver", "w-[7rem]"],
+                    ["Petrol", "w-[7rem]"],
+                    ["Profit", "w-[7rem]"],
+                    ["Actions", "w-[13.5rem]"],
+                  ].map(([h, width]) => (
+                    <th key={h} className={cn("px-3 py-3 font-medium", width)}>
                       {h}
                     </th>
                   ))}
@@ -160,16 +160,26 @@ export function TravelRecordsPage() {
               <tbody>
                 {items.map((r) => (
                   <tr key={r.id} className="border-t border-slate-100">
-                    <td className="px-3 py-3 font-medium">{r.invoiceNumber}</td>
-                    <td className="px-3 py-3">{r.customerName || "—"}</td>
-                    <td className="px-3 py-3">{r.fromPlace}</td>
-                    <td className="px-3 py-3">{r.toPlace}</td>
-                    <td className="px-3 py-3">{formatDate(r.fromDate)}</td>
-                    <td className="px-3 py-3">{formatDate(r.toDate)}</td>
-                    <td className="px-3 py-3">{formatInr(r.totalAmount)}</td>
-                    <td className="px-3 py-3">{formatInr(r.driverAmount)}</td>
-                    <td className="px-3 py-3">{formatInr(r.petrolAmount)}</td>
-                    <td className="px-3 py-3 font-semibold text-brand-700">{formatInr(r.profit)}</td>
+                    <td className="px-3 py-3 font-medium">
+                      <EllipsisText value={r.invoiceNumber} />
+                    </td>
+                    <td className="px-3 py-3">
+                      <EllipsisText value={r.customerName || "—"} />
+                    </td>
+                    <td className="px-3 py-3">
+                      <EllipsisText value={r.fromPlace} />
+                    </td>
+                    <td className="px-3 py-3">
+                      <EllipsisText value={r.toPlace} />
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap">{formatDate(r.fromDate)}</td>
+                    <td className="px-3 py-3 whitespace-nowrap">{formatDate(r.toDate)}</td>
+                    <td className="px-3 py-3 whitespace-nowrap">{formatInr(r.totalAmount)}</td>
+                    <td className="px-3 py-3 whitespace-nowrap">{formatInr(r.driverAmount)}</td>
+                    <td className="px-3 py-3 whitespace-nowrap">{formatInr(r.petrolAmount)}</td>
+                    <td className="px-3 py-3 whitespace-nowrap font-semibold text-brand-700">
+                      {formatInr(r.profit)}
+                    </td>
                     <td className="px-3 py-3">
                       <RowActions
                         record={r}
@@ -187,8 +197,10 @@ export function TravelRecordsPage() {
           <div className="space-y-3 lg:hidden">
             {items.map((r) => (
               <Card key={r.id}>
-                <p className="text-sm font-semibold text-brand-700">{r.invoiceNumber}</p>
-                <p className="mt-1 font-display text-base font-semibold sm:text-lg">
+                <p className="truncate text-sm font-semibold text-brand-700" title={r.invoiceNumber}>
+                  {r.invoiceNumber}
+                </p>
+                <p className="mt-1 truncate font-display text-base font-semibold sm:text-lg" title={`${r.fromPlace} → ${r.toPlace}`}>
                   {r.fromPlace} → {r.toPlace}
                 </p>
                 <p className="text-sm text-slate-500">
@@ -238,6 +250,14 @@ export function TravelRecordsPage() {
   );
 }
 
+function EllipsisText({ value }: { value: string }) {
+  return (
+    <span className="block truncate" title={value}>
+      {value}
+    </span>
+  );
+}
+
 function RowActions({
   record,
   canEdit,
@@ -250,42 +270,42 @@ function RowActions({
   onDelete: () => void;
 }) {
   return (
-    <div className="flex flex-wrap gap-2">
-      <Link className="icon-btn" to={`/invoices/${record.id}`} title="View">
-        <Eye size={20} />
+    <div className="flex flex-nowrap items-center gap-1.5">
+      <Link className="icon-btn !h-8 !w-8" to={`/invoices/${record.id}`} title="View">
+        <Eye size={16} />
       </Link>
-      <Link className="icon-btn" to={`/invoices/${record.id}?print=1`} title="Print">
-        <Printer size={20} />
+      <Link className="icon-btn !h-8 !w-8" to={`/invoices/${record.id}?print=1`} title="Print">
+        <Printer size={16} />
       </Link>
       {canEdit ? (
-        <Link className="icon-btn" to={`/travel/${record.id}/edit`} title="Edit">
-          <Pencil size={20} />
+        <Link className="icon-btn !h-8 !w-8" to={`/travel/${record.id}/edit`} title="Edit">
+          <Pencil size={16} />
         </Link>
       ) : null}
       {canDelete ? (
-        <button type="button" className="icon-btn-danger" onClick={onDelete} title="Delete">
-          <Trash2 size={20} />
+        <button type="button" className="icon-btn-danger !h-8 !w-8" onClick={onDelete} title="Delete">
+          <Trash2 size={16} />
         </button>
       ) : null}
       {record.invoiceDriveFileUrl ? (
         <a
-          className="icon-btn"
+          className="icon-btn !h-8 !w-8"
           href={record.invoiceDriveFileUrl}
           target="_blank"
           rel="noreferrer"
           title="Open Invoice"
         >
-          <ExternalLink size={20} />
+          <ExternalLink size={16} />
         </a>
       ) : (
         <a
-          className="icon-btn"
+          className="icon-btn !h-8 !w-8"
           href={apiUrl(`/api/invoices/${record.id}/file`)}
           target="_blank"
           rel="noreferrer"
           title="Open Invoice"
         >
-          <ExternalLink size={20} />
+          <ExternalLink size={16} />
         </a>
       )}
     </div>
